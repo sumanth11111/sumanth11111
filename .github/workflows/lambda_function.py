@@ -1,10 +1,8 @@
 import boto3
-import json
 
 import psycopg2
 
 s3 = boto3.client("s3")
-#rds = boto3.client("rds")
 def read_data_from_s3(event): 
     employee_list=[]
     bucket = event['Records'][0]['s3']['bucket']['name']
@@ -36,11 +34,6 @@ def lambda_handler(event, context):
     cur.execute("CREATE TABLE sumanth_database(EName CHAR(50), EID CHAR(50), ESalary CHAR(50), ELoc CHAR(50), ECellno CHAR(50), EJobid CHAR(50), EDept CHAR(50))")
     conn.commit()
    
-    #cursor.execute()
-    print("Table created successfully........")
-
-    #Closing the connection
-    #conn.close()
     
 
     data = read_data_from_s3(event)
@@ -71,27 +64,7 @@ def lambda_handler(event, context):
         conn.commit()
         
 
-#def main():
-    #topicArn = 'arn:aws:sns:ap-south-1:078337804161:sumanth-sns'
-    #endpoint = 'arn:aws:lambda:ap-south-1:078337804161:function:sumanth'
-    #sns = boto3.client('sns', 
-                  #      aws_access_key_id = 'AKIAIKHXMUWMRRQZ23CA',
-                   #     aws_secret_access_key = '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',
-                    #    region_name = 'ap-south-1')
 
-    #publishobject = "sumanth"
-
-    #responce = sns.publish(TopicArn = topicArn,
-     #                       #Endpoint=endpoint,
-      #                      Message = publishobject,
-       #                     Subject = 'EMPLOYEE-DATA')
-                            #MessageAttributes = {"Ename, EID, ESalary, ELoc, ECellno, EJobid, EDept"})
-
-    #print(responce['ResponceMetadata']['HTTPStatusCode'])                             
-    
-            
-    
-#read_data_from_s3('event') 
 event = {
   "Records": [
     {
